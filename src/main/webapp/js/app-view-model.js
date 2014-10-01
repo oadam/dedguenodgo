@@ -307,6 +307,12 @@ AppViewModel.prototype = {
 		clone.deletedBy = this.loggedInUser();
 		this._savePresent(present, clone, hideUndo);
 	},
+	undeletePresent: function(present) {
+		this.discardConfirm();
+		var clone = $.extend({}, present);
+		clone.deletedBy = null;
+		this._savePresent(present, clone);
+	},
 	discardConfirm: function() {
 		this.successMessage(null);
 		this.errorMessage(null);
