@@ -8,6 +8,7 @@
 		var result = $.extend({}, present);
 		result.creationDate = Server._longToDate(result.creationDate);
 		result.offeredDate = Server._longToDate(result.offeredDate);
+		result.sortDate = Server._longToDate(result.sortDate);
 		return result;
 	};
 	Server._formatForServer = function(present) {

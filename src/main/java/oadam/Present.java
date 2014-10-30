@@ -20,11 +20,14 @@ public class Present {
 	public DateTime creationDate;
 	public Long offeredBy;
 	public DateTime offeredDate;
+	/** Presents are sorted by this.
+	 *  If it is null creationDate is used instead*/
+	public DateTime sortDate;
 	public Long deletedBy;
 	
 	public Present(Long id, Key<Party> parent, String title, String description, Long to,
 			Long createdBy, DateTime creationDate, Long offeredBy,
-			DateTime offeredDate, Long deletedBy) {
+			DateTime offeredDate, DateTime sortDate, Long deletedBy) {
 		super();
 		this.id = id;
 		this.parent = parent;
@@ -35,6 +38,7 @@ public class Present {
 		this.creationDate = creationDate;
 		this.offeredBy = offeredBy;
 		this.offeredDate = offeredDate;
+		this.sortDate = sortDate;
 		this.deletedBy = deletedBy;
 	}
 	
