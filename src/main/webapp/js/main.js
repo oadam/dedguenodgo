@@ -73,4 +73,28 @@ $(document).ready(function() {
 	}
 	loginObservable.subscribe(onLogin);
 	onLogin(loginObservable());
+
+	//reorderability
+	var list = document.getElementById('present-list');
+	new Slip(list);
+	$(list)
+	//prevent swiping
+	.on('slip:beforeswipe', function(e) {
+		e.preventDefault();
+	})
+	//without this, reordering requires to hold mouse down for 1 second
+	.on('slip:beforewait', function(e) {
+		e.preventDefault();
+	})
+	.on('slip:beforereorder', function(e) {
+		if ($(e.target).is('button, a')) {
+			e.preventDefault();
+		}
+	})
+	.on('slip:reorder', function(e) {
+		var d = e.originalEvent.detail;
+		var from = d.originalIndex;
+		var to = d.spliceIndex;
+		appViewModel.reorder(from, to);
+	});
 });

@@ -104,8 +104,8 @@ AppViewModel.prototype = {
 	logout: function() {
 		this.logoutCallback();
 	},
-	_comparePresents: function(a, b) {
-		return a.creationDate.getTime() - b.creationDate.getTime();
+	_getPresentSortDate: function(p) {
+		return p.sortDate || p.creationDate;
 	},
 	displayedPresents: function() {
 		var selectedList = this.selectedList();
@@ -123,7 +123,7 @@ AppViewModel.prototype = {
 			}
 			return true;
 		}).sort(function(a, b) {
-			return self._comparePresents(a, b);
+			return self._getPresentSortDate(a).getTime() - self._getPresentSortDate(b).getTime();
 		});
 	},
 	/**Returns a string or null*/
@@ -171,6 +171,33 @@ AppViewModel.prototype = {
 			}
 		}
 		this.editing(false);
+	},
+	reorder: function(from, to) {
+		if (from == to) {return;}
+		var presents = this.displayedPresents();
+		var clone = $.extend({}, presents[from]);
+		var sortDateTime;
+		if (to == 0) {
+			var d = this._getPresentSortDate(presents[0]);
+			sortDateTime = d.getTime() - 24 * 3600 * 1000;
+		} else if (to == presents.length - 1) {
+			var d = this._getPresentSortDate(presents[presents.length - 1]);
+			sortDateTime = d.getTime() + 24 * 3600 * 1000;
+		} else {
+			//sort date will be the mean of the dates of the items
+			//immediatly before and after us
+			//best way to compute that is to remove us from the array
+			//and then consider our `to` position
+			var allButUs = presents.slice();
+			allButUs.splice(from, 1);
+			var d1 = this._getPresentSortDate(allButUs[to - 1]);
+			var d2 = this._getPresentSortDate(allButUs[to]);
+			console.log(presents[to], presents[to+1]);
+			sortDateTime = d1.getTime() + (d2.getTime() - d1.getTime()) / 2;
+		}
+		clone.sortDate = new Date(sortDateTime);
+		console.log('new date', clone.sortDate);
+		this._savePresent(presents[from], clone);
 	},
 	_isCreating: function() {
 		return this.editedPresent() === null;

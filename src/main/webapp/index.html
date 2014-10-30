@@ -8,10 +8,12 @@
 		<link rel="stylesheet" type="text/css" href="css/lib/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/lib/bootstrap-theme.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 		<script src="js/lib/jquery.min.js"></script>
 		<script src="js/lib/knockout-3.0.0.debug.js"></script>
 		<script src="js/lib/markdown.js"></script>
 		<script src="js/lib/bootstrap-markdown.js"></script>
+		<script src="js/lib/slip.js"></script>
 		<script src="js/markdown-bindings.js"></script>
 		<script src="js/utils.js"></script>
 		<script src="js/app-view-model.js"></script>
@@ -103,20 +105,23 @@
 			<p class="jumbotron" data-bind="visible: displayedPresents().length == 0">
 			Cette liste est vide ! Vous pouvez ajouter des idées de cadeaux à l'aide du bouton ci-dessous
 			</p>
-			<ul class="list-group" data-bind="foreach: displayedPresents()">
+			<ul id="present-list" class="list-group" data-bind="foreach: displayedPresents()">
 				<!-- the present -->
 				<li class="present list-group-item" data-bind="event: { dblclick: function(){$root.editPresent($data);} }, css: { offered: $root.displayPresentAsOffered($data) , deleted: deletedBy }">
-				<a data-bind="visible: !deletedBy, click: function() { $root.deletePresent($data); }">Supprimer</a>
-				<a data-bind="visible: deletedBy, click: function() { $root.undeletePresent($data); }">Dé-Supprimer</a>
-				<a data-bind="visible: !deletedBy, click: function() { $root.editPresent($data); }">Modifier</a>
-				<a data-bind="visible: !deletedBy, click: function() { $root.togglePresentOffered($data); }, text: $root.displayPresentAsOffered($data) ? 'Dé-rayer' : 'Rayer', attr: { title: $root.displayPresentAsOffered($data) ? 'Marquer comme non offert': 'Marquer comme offert' }"></a>
-				<h4 class="list-group-item-heading">
-					<span class="title" data-bind="text:title"></span>
-					<span class="offered-by" data-bind="text: $root.displayPresentAsCreatedBy($data) || ''"></span>
-					<span class="offered-by" data-bind="text: $root.displayPresentAsOffered($data) || ''"></span>
-					<span class="deleted-by" data-bind="visible: deletedBy, text: !deletedBy ? '' : '(Ce cadeau a été supprimé par ' + $root.getUserName(deletedBy) + ')'"></span>
-				</h4>
-				<p class="list-group-item-text" data-bind="markdown:description"> </p>
+					<span class="buttons pull-right">
+						<a data-bind="visible: !deletedBy, click: function() { $root.togglePresentOffered($data); }, text: $root.displayPresentAsOffered($data) ? 'Dé-rayer' : 'Rayer', attr: { title: $root.displayPresentAsOffered($data) ? 'Marquer comme non offert': 'Marquer comme offert' }"></a>
+						<a data-bind="visible: !deletedBy, click: function() { $root.editPresent($data); }">Modifier</a>
+						<a data-bind="visible: deletedBy, click: function() { $root.undeletePresent($data); }">Dé-Supprimer</a>
+						<a data-bind="visible: !deletedBy, click: function() { $root.deletePresent($data); }">Supprimer</a>
+						<i class="reorder fa fa-bars"></i>
+					</span>
+					<h4 class="list-group-item-heading">
+						<span class="title" data-bind="text:title"></span>
+						<span class="offered-by" data-bind="text: $root.displayPresentAsCreatedBy($data) || ''"></span>
+						<span class="offered-by" data-bind="text: $root.displayPresentAsOffered($data) || ''"></span>
+						<span class="deleted-by" data-bind="visible: deletedBy, text: !deletedBy ? '' : '(Ce cadeau a été supprimé par ' + $root.getUserName(deletedBy) + ')'"></span>
+					</h4>
+					<p class="list-group-item-text" data-bind="markdown:description"> </p>
 				</li>
 			</ul>
 			<button class="btn btn-primary" data-bind="click: addPresent">Ajouter un cadeau</button>

@@ -67,10 +67,12 @@ h1 {
 .present.deleted-by {
 	font-weight: bold;
 }
-.present > a {
-	float: right;
+.present > .buttons > a, .present > .buttons > .reorder {
 	margin-left: 0.5em;
 	cursor: pointer;
+}
+.present .reorder {
+	cursor: move;
 }
 #command-execution {
 	position: fixed;

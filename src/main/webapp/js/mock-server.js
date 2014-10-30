@@ -85,7 +85,7 @@
 			if (!presents) {
 				return null;
 			}
-			var dateProperties = ['creationDate', 'offeredDate'];
+			var dateProperties = ['creationDate', 'offeredDate', 'sortDate'];
 			for (var i = 0; i < presents.length; i++) {
 				var p = presents[i];
 				for (var j = 0; j < dateProperties.length; j++) {
