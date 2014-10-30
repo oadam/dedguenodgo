@@ -194,4 +194,36 @@ describe("The view model", function() {
 		viewModel.togglePresentOffered(viewModel.presents()[2]);
 		expect(viewModel.presents()[2].offeredBy).toEqual('idOlivier');
 	});
+
+	it("can reorder", function() {
+		viewModel.loggedInUser("idElisa");
+		viewModel.selectedList('idOlivier');
+		expect(viewModel.displayedPresents().length).toEqual(3);
+		var initial = viewModel.displayedPresents();
+
+		//moving to middle
+		viewModel.reorder(0, 1);
+		var reordered = viewModel.displayedPresents();
+		expect(initial[1].id).toEqual(reordered[0].id);
+		expect(initial[0].id).toEqual(reordered[1].id);
+		expect(initial[2].id).toEqual(reordered[2].id);
+		viewModel.reorder(1, 0);
+
+
+		//moving to top
+		viewModel.reorder(1, 0);
+		reordered = viewModel.displayedPresents();
+		expect(initial[1].id).toEqual(reordered[0].id);
+		expect(initial[0].id).toEqual(reordered[1].id);
+		expect(initial[2].id).toEqual(reordered[2].id);
+		viewModel.reorder(0, 1);
+
+		//moving to bottom
+		viewModel.reorder(1, 2);
+		reordered = viewModel.displayedPresents();
+		expect(initial[0].id).toEqual(reordered[0].id);
+		expect(initial[2].id).toEqual(reordered[1].id);
+		expect(initial[1].id).toEqual(reordered[2].id);
+		viewModel.reorder(2, 1);
+	});
 });
