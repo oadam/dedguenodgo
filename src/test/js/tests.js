@@ -35,7 +35,7 @@ describe("The view model", function() {
 					description: "Une matière gluante et fluo",
 					to: "idElisa",
 					createdBy: "idElisa",
-					creationDate: new Date(),
+					creationDate: new Date($.now()),
 					offeredBy: "idOlivier",
 					givenDate: new Date(),
 					deleted: false
@@ -45,7 +45,7 @@ describe("The view model", function() {
 					description: "Une matière gluante et fluo",
 					to: "idOlivier",
 					createdBy: "idOlivier",
-					creationDate: new Date(),
+					creationDate: new Date($.now() + 2000),
 					offeredBy: null,
 					givenDate: null,
 					deleted: false
@@ -55,9 +55,9 @@ describe("The view model", function() {
 					description: "Une matière gluante et fluo",
 					to: "idOlivier",
 					createdBy: "idOlivier",
-					creationDate: new Date(),
+					creationDate: new Date($.now() + 3000),
 					offeredBy: "idNicolas",
-					givenDate: new Date(),
+					givenDate: new Date($.now() + 3500),
 					deleted: false
 				}, {
 					id: "4",
@@ -65,9 +65,9 @@ describe("The view model", function() {
 					description: "Une matière gluante et fluo",
 					to: "idOlivier",
 					createdBy: "idNicolas",
-					creationDate: new Date(),
+					creationDate: new Date($.now() + 4000),
 					offeredBy: "idNicolas",
-					givenDate: new Date(),
+					givenDate: new Date($.now() + 4500),
 					deleted: false
 				}, ],
 				users: {
@@ -199,31 +199,28 @@ describe("The view model", function() {
 		viewModel.loggedInUser("idElisa");
 		viewModel.selectedList('idOlivier');
 		expect(viewModel.displayedPresents().length).toEqual(3);
-		var initial = viewModel.displayedPresents();
+
+		function getIds() {
+			return viewModel.displayedPresents().map(function(p) {
+				return p.id;
+			});
+		}
+		expect(getIds()).toEqual(["2", "3", "4"]);
 
 		//moving to middle
 		viewModel.reorder(0, 1);
-		var reordered = viewModel.displayedPresents();
-		expect(initial[1].id).toEqual(reordered[0].id);
-		expect(initial[0].id).toEqual(reordered[1].id);
-		expect(initial[2].id).toEqual(reordered[2].id);
+		expect(getIds()).toEqual(["3", "2", "4"]);
 		viewModel.reorder(1, 0);
 
 
 		//moving to top
 		viewModel.reorder(1, 0);
-		reordered = viewModel.displayedPresents();
-		expect(initial[1].id).toEqual(reordered[0].id);
-		expect(initial[0].id).toEqual(reordered[1].id);
-		expect(initial[2].id).toEqual(reordered[2].id);
+		expect(getIds()).toEqual(["3", "2", "4"]);
 		viewModel.reorder(0, 1);
 
 		//moving to bottom
 		viewModel.reorder(1, 2);
-		reordered = viewModel.displayedPresents();
-		expect(initial[0].id).toEqual(reordered[0].id);
-		expect(initial[2].id).toEqual(reordered[1].id);
-		expect(initial[1].id).toEqual(reordered[2].id);
+		expect(getIds()).toEqual(["2", "4", "3"]);
 		viewModel.reorder(2, 1);
 	});
 });
