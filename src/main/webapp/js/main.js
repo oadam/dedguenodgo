@@ -87,7 +87,7 @@ $(document).ready(function() {
 		e.preventDefault();
 	})
 	.on('slip:beforereorder', function(e) {
-		if ($(e.target).is('button, a')) {
+		if (!$(e.target).is('.reorder')) {
 			e.preventDefault();
 		}
 	})

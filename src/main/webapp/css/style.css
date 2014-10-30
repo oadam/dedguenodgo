@@ -73,6 +73,9 @@ h1 {
 }
 .present .reorder {
 	cursor: move;
+	display: inline-block;
+	vertical-align: top;
+	font-size: 2em;
 }
 #command-execution {
 	position: fixed;
