@@ -14,4 +14,4 @@ run `mvn install`
 
 - if doing java work run the devserver `mvn appengine:devserver`
 - if doing javascript work `cd src/main/webapp && python -m SimpleHTTPServer` then go to [http://localhost:8000/index.html?demo=1]()
-
+- to deploy to appengine `mvn appengine:update`

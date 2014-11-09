@@ -66,14 +66,6 @@ AppViewModel.prototype = {
 			self.presents(pAndU.presents);
 		});
 	},
-	vowels: {
-		a: true,
-		e: true,
-		i: true,
-		o: true,
-		u: true,
-		y: true
-	},
 	lists: function() {
 		var users = this.users();
 		var loggedInUser = this.loggedInUser();
@@ -88,12 +80,9 @@ AppViewModel.prototype = {
 			return users[a].name < users[b].name ? -1 : 1;
 		});
 		return ids.map(function(id) {
-			var userName = users[id].name;
-			var beginByVowel = AppViewModel.prototype.vowels[userName.slice(0, 1).toLowerCase()];
-			var label = 'Liste ' + (beginByVowel ? "d'" : "de ") + userName;
 			return {
 				id: id,
-				label: label
+				label: users[id].name
 			};
 		});
 	},

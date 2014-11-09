@@ -101,7 +101,10 @@
 				<span data-bind="text: !(loggedInUser()) ? '' : getUserName(loggedInUser())"></span><br/>
 				<a href="#" data-bind="visible: loggedInUser, click: logout">déconnexion</a>
 			</div>
-			<select id="list-select" class="form-control input-large" data-bind="options: lists(), value: selectedList, optionsValue: 'id', optionsText:'label'"></select> 
+			<div id="list-select">
+				Liste de :
+				<select data-bind="options: lists(), value: selectedList, optionsValue: 'id', optionsText:'label'"></select>
+			</div>
 			<p class="jumbotron" data-bind="visible: displayedPresents().length == 0">
 			Cette liste est vide ! Vous pouvez ajouter des idées de cadeaux à l'aide du bouton ci-dessous
 			</p>
@@ -113,10 +116,10 @@
 						<a data-bind="visible: !deletedBy, click: function() { $root.editPresent($data); }">Modifier</a>
 						<a data-bind="visible: deletedBy, click: function() { $root.undeletePresent($data); }">Dé-Supprimer</a>
 						<a data-bind="visible: !deletedBy, click: function() { $root.deletePresent($data); }">Supprimer</a>
-						<i class="reorder fa fa-bars"></i>
+						<i class="reorder fa fa-bars" title="Glissez-déposez pour réordonner"></i>
 					</span>
 					<h4 class="list-group-item-heading">
-						<span class="title" data-bind="text:title"></span>
+						<span class="title" data-bind="text:title">Title</span>
 						<span class="offered-by" data-bind="text: $root.displayPresentAsCreatedBy($data) || ''"></span>
 						<span class="offered-by" data-bind="text: $root.displayPresentAsOffered($data) || ''"></span>
 						<span class="deleted-by" data-bind="visible: deletedBy, text: !deletedBy ? '' : '(Ce cadeau a été supprimé par ' + $root.getUserName(deletedBy) + ')'"></span>
@@ -132,13 +135,13 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-bind="click: cancelEdition">&times;</button>
-							<h4 class="modal-title" data-bind="text: editPopupText()"></h4>
+							<h4 class="modal-title" data-bind="text: editPopupText()">Popup title</h4>
 						</div>
 						<div class="modal-body">
 							<form class="form" data-bind="submit: saveEditedPresent">
 								<div class="form-group">
 									<label>Titre</label>
-									<input class="form-control" type="text" data-bind="value:$root.edition.title, hasfocus: editing()"></input>
+									<input class="form-control" type="text" data-bind="value:$root.edition.title, hasfocus: editing()"/>
 								</div>
 								<div class="form-group">
 									<label>Description</label>
