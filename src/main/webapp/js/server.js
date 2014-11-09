@@ -105,7 +105,7 @@
 			return $.ajax({
 				url: 'unauthenticated-resources/party-users',
 				contentType: 'application/json',
-				type: 'GET',
+				type: 'POST',
 				dataType: "json",
 				data: credentials
 			});
