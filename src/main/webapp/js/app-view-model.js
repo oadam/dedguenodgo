@@ -19,7 +19,7 @@ function AppViewModel(options) {
 		self.setHash(self.getUserName(value));
 	});
 	this.addHashListener(function(hash) {
-		var match = /#(\w+)/.exec(hash);
+		var match = /#(.*)/.exec(hash);
 		if (!match) {return;}
 		var name = match[1];
 		var user = self.getUserByName(name);
