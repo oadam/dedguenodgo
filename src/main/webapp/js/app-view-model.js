@@ -95,7 +95,9 @@ AppViewModel.prototype = {
 			if (b === loggedInUser) {
 				return 1;
 			}
-			return users[a].name < users[b].name ? -1 : 1;
+			var na = users[a].name.toLowerCase();
+			var nb = users[b].name.toLowerCase();
+			return na == nb ? 0 : na > nb ? 1 : -1;
 		});
 		return ids.map(function(id) {
 			return {

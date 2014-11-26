@@ -82,7 +82,7 @@ describe("The view model", function() {
 					},
 					'idElisa': {
 						id: 'idElisa',
-						name: 'Elisa'
+						name: 'elisa'
 					},
 				}
 			});
@@ -233,13 +233,13 @@ describe("The view model", function() {
 
 	it("stores the selected list in the hash", function() {
 		viewModel.selectedList("idElisa");
-		expect(windowHash).toEqual('Elisa');
+		expect(windowHash).toEqual('elisa');
 		viewModel.selectedList("idOlivier");
 		expect(windowHash).toEqual('Olivier');
 	});
 
 	it("reacts to window hashchange", function() {
-		windowHashListener('#Elisa');
+		windowHashListener('#elisa');
 		expect(viewModel.selectedList()).toEqual('idElisa');
 		windowHashListener('#Olivier');
 		expect(viewModel.selectedList()).toEqual('idOlivier');
