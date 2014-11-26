@@ -2,6 +2,10 @@ $(document).ready(function() {
 
 	var loginObservable = createStorageObservable(sessionStorage, 'login');
 	var welcomeHidden = createStorageObservable(sessionStorage, 'welcomeHidden');
+	var hashChangeListener = $.noop;
+	window.onhashchange = function() {
+		hashChangeListener(location.hash);
+	};
 
 	window.server = new Server({
 		invalidLoginCallback: function() {
@@ -20,6 +24,12 @@ $(document).ready(function() {
 		},
 		prompt: function(t) {
 			return prompt(t);
+		},
+		setHash: function(hash) {
+			window.location.hash = hash;
+		},
+		addHashListener: function(callback) {
+			hashChangeListener = callback;
 		}
 	});
 	window.loginViewModel = new LoginViewModel({
@@ -79,6 +89,8 @@ $(document).ready(function() {
 	}
 	loginObservable.subscribe(onLogin);
 	onLogin(loginObservable());
+	//trigger parsing of initial hash
+	hashChangeListener(location.hash);
 
 	//reorderability
 	var list = document.getElementById('present-list');

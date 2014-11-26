@@ -3,6 +3,8 @@ function AppViewModel(options) {
 	this.prompt = options.prompt;
 	this.server = options.server;
 	this.logoutCallback = options.logoutCallback;
+	this.setHash = options.setHash;
+	this.addHashListener = options.addHashListener;
 
 	this.users = ko.observable({});
 	this.loggedInUser = createStorageObservable(sessionStorage, 'loggedInUser');
@@ -12,6 +14,22 @@ function AppViewModel(options) {
 	this.loggedInUser.subscribe(function(value) {
 		self.selectedList(value);
 	});
+	//store selected list in url hash
+	this.selectedList.subscribe(function(value) {
+		self.setHash(self.getUserName(value));
+	});
+	this.addHashListener(function(hash) {
+		var match = /#(\w+)/.exec(hash);
+		if (!match) {return;}
+		var name = match[1];
+		var user = self.getUserByName(name);
+		if (user) {
+			self.selectedList(user.id);
+		} else {
+			self.setHash('');
+		}
+	});
+
 	this.presents = ko.observable([]);
 	//present edition
 	this.editing = ko.observable(false);
@@ -89,6 +107,16 @@ AppViewModel.prototype = {
 	getUserName: function(userId) {
 		var user = this.users()[userId];
 		return !user ? 'utilisateur supprimé' : user.name;
+	},
+	getUserByName: function(name) {
+		var users = this.users();
+		for (var id in users) {
+			var user = users[id];
+			if (user.name == name) {
+				return user;
+			}
+		}
+		return null;
 	},
 	logout: function() {
 		this.logoutCallback();

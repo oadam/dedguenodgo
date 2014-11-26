@@ -3,6 +3,7 @@ describe("The view model", function() {
 	var throwIfConfirm, nextConfirmAnswer;
 	var addPresentCall, addPresentDfd;
 	var editPresentCall, editPresentDfd;
+	var windowHash, windowHashListener;
 
 	beforeEach(function() {
 		throwIfConfirm = true;
@@ -93,6 +94,12 @@ describe("The view model", function() {
 				addPresent: addPresentCommand,
 				editPresent: editPresentCommand,
 				getUsersAndPresents: getUsersAndPresents
+			},
+			setHash: function(hash) {
+				windowHash = hash;
+			},
+			addHashListener: function(listener) {
+				windowHashListener = listener;
 			}
 		});
 		viewModel.loggedInUser('idOlivier');
@@ -222,5 +229,19 @@ describe("The view model", function() {
 		viewModel.reorder(1, 2);
 		expect(getIds()).toEqual(["2", "4", "3"]);
 		viewModel.reorder(2, 1);
+	});
+
+	it("stores the selected list in the hash", function() {
+		viewModel.selectedList("idElisa");
+		expect(windowHash).toEqual('Elisa');
+		viewModel.selectedList("idOlivier");
+		expect(windowHash).toEqual('Olivier');
+	});
+
+	it("reacts to window hashchange", function() {
+		windowHashListener('#Elisa');
+		expect(viewModel.selectedList()).toEqual('idElisa');
+		windowHashListener('#Olivier');
+		expect(viewModel.selectedList()).toEqual('idOlivier');
 	});
 });
