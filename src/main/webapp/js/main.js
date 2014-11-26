@@ -61,8 +61,14 @@ $(document).ready(function() {
 			server.getUsersAndPresents().always(function() {
 				loadingDiv.hide();
 			}).fail(function(e) {
-				errorDiv.show();
-				console.error(e);
+				if (e.status == 404) {
+					console.warn('party from session storage has been deleted');
+					loginObservable(null);
+				} else {
+					//unexpected error
+					errorDiv.show();
+					console.error(e);
+				}
 			}).done(function(usersAndPresents) {
 				appDiv.show();
 				appViewModel.users(usersAndPresents.users);

@@ -72,7 +72,7 @@ public class SecurityFilter implements Filter {
 
 	private void sendError(HttpServletResponse response) throws IOException {
 		response.setHeader("WWW-Authenticate", "Basic realm =\"" + REALM + "\"");
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		response.sendError(HttpServletResponse.SC_NOT_FOUND);
 	}
 
 	@Override
