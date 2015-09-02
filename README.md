@@ -2,16 +2,12 @@
 
 A wishlist website to help my family keep track of Christmas presents.
 
-### Live app on appengine
-URL: https://dedguenodgo.appspot.com
-login: demo
-password: demo
+## Demo environments
 
-### Javascript only demo
-URL: https://rawgit.com/oadam/dedguenodgo/master/src/main/webapp/?demo=1
-login: demo
-password: demo
-
+Environment                                                                                | login | password
+------------------------------------------------------------------------------------------ | ----- | --------
+[Live app (appengine)](https://dedguenodgo.appspot.com)                                    | demo  | demo
+[Javacript only demo](https://rawgit.com/oadam/dedguenodgo/master/src/main/webapp/?demo=1) | demo  | demo
 
 # To build
 install mvn
