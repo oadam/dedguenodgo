@@ -3,7 +3,15 @@ dedguenodgo
 
 A wishlist website to help my family keep track of Christmas presents.
 
-The live app is available on [google app engine](https://dedguenodgo.appspot.com) with login demo/demo. You can also test the [localstorage based demo](http://oadam.github.com/dedguenodgo/index.html?demo=1) hosted on github.
+## Live app on appengine
+URL: https://dedguenodgo.appspot.com
+login: demo
+password: demo
+
+## Javascript only demo
+URL: https://rawgit.com/oadam/dedguenodgo/master/src/main/webapp/?demo=1
+login: demo
+password: demo
 
 [![Build Status](https://drone.io/github.com/oadam/dedguenodgo/status.png)](https://drone.io/github.com/oadam/dedguenodgo/latest)
 
