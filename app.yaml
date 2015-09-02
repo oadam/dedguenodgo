@@ -8,9 +8,9 @@ handlers:
   script: _go_app
   secure: always
 - url: /
-  static_files: src/webapp/index.html
+  static_files: webapp/index.html
   secure: always
-  upload: src/webapp/index.html
+  upload: webapp/index.html
 - url: /
-  static_dir: src/webapp
+  static_dir: webapp
   secure: always

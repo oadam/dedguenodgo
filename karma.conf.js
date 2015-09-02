@@ -14,16 +14,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-     'src/webapp/js/lib/jquery*.js',//jquery prerequisite for some bootstrap-markdown
-     'src/webapp/js/lib/*.js',
-     'src/webapp/js/*.js',
-     'test/js/*.js'
+     'webapp/js/lib/jquery*.js',//jquery prerequisite for some bootstrap-markdown
+     'webapp/js/lib/*.js',
+     'webapp/js/*.js',
+     'webapp_test/js/*.js'
     ],
 
 
     // list of files to exclude
     exclude: [
-              'src/webapp/js/main.js'
+              'webapp/js/main.js'
     ],
 
 
