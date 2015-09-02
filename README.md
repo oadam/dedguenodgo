@@ -1,22 +1,19 @@
-dedguenodgo
-===========
+# dedguenodgo [![Build Status](https://drone.io/github.com/oadam/dedguenodgo/status.png)](https://drone.io/github.com/oadam/dedguenodgo/latest)
 
 A wishlist website to help my family keep track of Christmas presents.
 
-## Live app on appengine
+### Live app on appengine
 URL: https://dedguenodgo.appspot.com
 login: demo
 password: demo
 
-## Javascript only demo
+### Javascript only demo
 URL: https://rawgit.com/oadam/dedguenodgo/master/src/main/webapp/?demo=1
 login: demo
 password: demo
 
-[![Build Status](https://drone.io/github.com/oadam/dedguenodgo/status.png)](https://drone.io/github.com/oadam/dedguenodgo/latest)
 
-To build
---------
+# To build
 install mvn
 run `mvn install`
 
