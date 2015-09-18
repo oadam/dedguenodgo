@@ -3,25 +3,26 @@ package nonoel
 import (
 	"appengine"
 	"appengine/datastore"
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 )
 
 var ErrInvalid = bcrypt.ErrMismatchedHashAndPassword
 
 type adminPassword struct {
-	password []byte
+	Password []byte
 }
 
 func CheckOrSetAdminPassword(c appengine.Context, password string) error {
+	//we need a parentKey to have strong consistency
+	//parentKey := datastore.NewKey(c, "adminPasswordParent", "singleton", 0, nil)
+	//key := datastore.NewKey(c, "adminPassword", "singleton", 0, parentKey)
 	key := datastore.NewKey(c, "adminPassword", "singleton", 0, nil)
-	var current *adminPassword = new(adminPassword)
-	err := datastore.Get(c, key, current)
+	current := new(adminPassword)
+	var err = datastore.Get(c, key, current)
 	switch err {
 	case nil:
 		// check password
-		fmt.Printf("current: %v", current.password)
-		return bcrypt.CompareHashAndPassword(current.password, []byte(password))
+		return bcrypt.CompareHashAndPassword(current.Password, []byte(password))
 	case datastore.ErrNoSuchEntity:
 		// no current password
 		// store new password and exit
@@ -29,7 +30,8 @@ func CheckOrSetAdminPassword(c appengine.Context, password string) error {
 		if err != nil {
 			return err
 		}
-		_, err = datastore.Put(c, key, &adminPassword{hashed})
+		var toStore = &adminPassword{hashed}
+		_, err = datastore.Put(c, key, toStore)
 		return err
 	default:
 		return err
