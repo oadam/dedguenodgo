@@ -45,12 +45,17 @@ func createParty(w http.ResponseWriter, r *http.Request) {
 	adminPassword := r.FormValue("adminPassword")
 	err := CheckOrSetAdminPassword(c, adminPassword)
 	if err != nil {
-		http.Error(w, "wrong admin password", http.StatusUnauthorized)
+		switch err {
+		case ErrInvalidPassword:
+			http.Error(w, "wrong admin password", http.StatusUnauthorized)
+			c.Warningf("wrong admin password")
+		default:
+			http.Error(w, "error", http.StatusInternalServerError)
+			c.Errorf("error while checking adminPassword : %v", err)
+		}
 		return
 	}
-
 	partyName := r.FormValue("partyName")
 	partyPassword := r.FormValue("partyPassword")
-
 	fmt.Fprintf(w, "Party %s/%s created successfully", partyName, partyPassword)
 }

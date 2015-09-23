@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var ErrInvalid = bcrypt.ErrMismatchedHashAndPassword
+var ErrInvalidPassword = bcrypt.ErrMismatchedHashAndPassword
 
 type adminPassword struct {
 	Password []byte
