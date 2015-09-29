@@ -1,5 +1,4 @@
-dedguenodgo
-===========
+# dedguenodgo
 
 A wishlist website to help my family keep track of Christmas presents.
 
@@ -7,8 +6,25 @@ The live app is available on [google app engine](https://dedguenodgo.appspot.com
 
 [![Build Status](https://drone.io/github.com/oadam/dedguenodgo/status.png)](https://drone.io/github.com/oadam/dedguenodgo/latest)
 
-To build
---------
+## How it works
+
+### Registered users
+Anyone can register to the system and build a wishlist.
+
+### User groups
+Registered users can create user groups identified by a name/password pair.
+The credentials to a user group can be sent to other users so that they join the group.
+When joining a group, the user chooses an alias that seems relevant.
+
+### Anonymous users
+To help novice users getting started, the system has a concept of anonymous user.
+Anonymous users are attached to a specific user group.
+Anyone who posseses the credentials for a user group can :
+- add/remove anonymous users to it
+- log in as one of the anonymous users
+
+## For developers
+
 install mvn
 run `mvn install`
 

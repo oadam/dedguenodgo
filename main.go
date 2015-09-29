@@ -3,31 +3,25 @@ package nonoel
 import (
 	"appengine"
 	"fmt"
+	"github.com/gorilla/mux"
 	"net/http"
 )
 
 func init() {
-	addUnauth("/wakeUp", noop)
-	addUnauth("/party", createParty)
-	addAuth("/hello", noop)
+	r := mux.NewRouter()
+	http.Handle("/", r)
+	main := r.PathPrefix("/REST/").Subrouter()
+	RegisterUserGroupHandlers(main)
 }
 
-func addUnauth(subpath string, f func(w http.ResponseWriter, r *http.Request)) {
-	http.HandleFunc("/unauthenticated-resources"+subpath, f)
-}
-
-func addAuth(subpath string, f func(w http.ResponseWriter, r *http.Request)) {
-	http.Handle("/authenticated-resources"+subpath, addAuthCheck(http.HandlerFunc(f)))
-}
-
-func addAuthCheck(h http.Handler) http.Handler {
+func AddAuth(subpath string, handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var partyId = r.Header.Get("dedguenodgo-partyId")
 		var partyPassword = r.Header.Get("dedguenodgo-partyPassword")
 		if !checkAuth(partyId, partyPassword) {
 			http.Error(w, "wrong username/password", http.StatusUnauthorized)
 		} else {
-			h.ServeHTTP(w, r)
+			handler.ServeHTTP(w, r)
 		}
 	})
 }
@@ -37,25 +31,7 @@ func checkAuth(partyId, partyPassword string) bool {
 }
 
 func noop(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "OK")
-}
-
-func createParty(w http.ResponseWriter, r *http.Request) {
-	c := appengine.NewContext(r)
-	adminPassword := r.FormValue("adminPassword")
-	err := CheckOrSetAdminPassword(c, adminPassword)
-	if err != nil {
-		switch err {
-		case ErrInvalidPassword:
-			http.Error(w, "wrong admin password", http.StatusUnauthorized)
-			c.Warningf("wrong admin password")
-		default:
-			http.Error(w, "error", http.StatusInternalServerError)
-			c.Errorf("error while checking adminPassword : %v", err)
-		}
-		return
-	}
-	partyName := r.FormValue("partyName")
-	partyPassword := r.FormValue("partyPassword")
-	fmt.Fprintf(w, "Party %s/%s created successfully", partyName, partyPassword)
+	fmt.Fprint(w, r.URL)
+	fmt.Fprint(w, " path ")
+	fmt.Fprint(w, r.URL.Path)
 }
