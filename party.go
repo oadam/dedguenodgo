@@ -11,7 +11,7 @@ import (
 
 func RegisterPartyHandlers(h *mux.Router) {
 	h.Path("/party").Methods("POST").Handler(http.HandlerFunc(createParty))
-	//h.Path("/party-users").Methods("POST").Handler(http.HandlerFunc(getPartyUsers))
+	h.Path("/party-users").Methods("POST").Handler(AddAuth(getPartyUsers))
 }
 
 func createParty(w http.ResponseWriter, r *http.Request) {
@@ -39,12 +39,43 @@ func createParty(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func getPartyUsers(partyId string, w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "[]")
+}
+
+func CheckPartyPassword(c appengine.Context, id, password string) bool {
+	key := getPartyKey(c, id)
+	current := new(Party)
+	var err = datastore.Get(c, key, current)
+	passOk := errBoolOrPanic(err, nil, datastore.ErrNoSuchEntity)
+	if !passOk {
+		return false
+	}
+	err = bcrypt.CompareHashAndPassword(current.Password, []byte(password))
+	return errBoolOrPanic(err, nil, bcrypt.ErrMismatchedHashAndPassword)
+}
+
+func errBoolOrPanic(err, trueErr, falseErr error) bool {
+	switch err {
+	case trueErr:
+		return true
+	case falseErr:
+		return false
+	default:
+		panic(err)
+	}
+}
+
 type Party struct {
 	Password []byte
 }
 
-func storeParty(c appengine.Context, name, password string) error {
-	key := datastore.NewKey(c, "party", name, 0, nil)
+func getPartyKey(c appengine.Context, id string) *datastore.Key {
+	return datastore.NewKey(c, "party", id, 0, nil)
+}
+
+func storeParty(c appengine.Context, id, password string) error {
+	key := getPartyKey(c, id)
 	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return err

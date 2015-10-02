@@ -24,14 +24,15 @@
 	};
 
 	Server.prototype = {
-		addAuthorizationToAjaxOptions: function(ajaxOptions) {
-			if (!this.login) {
+		addAuthorizationToAjaxOptions: function(ajaxOptions, login) {
+			if (!this.login && !login) {
 				console.warn('calling server but login has not been set');
 				return;
 			}
+			login = this.login || login;
 			ajaxOptions.headers = {
-				'dedguenodgo-partyId': this.login.partyId,
-				'dedguenodgo-partyPassword': this.login.partyPassword,
+				'dedguenodgo-partyId': login.partyId,
+				'dedguenodgo-partyPassword': login.partyPassword,
 			};
 		},
 		setLogin: function(login) {
@@ -98,14 +99,15 @@
 				};
 			});
 		},
-		getPartyUsers: function(credentials) {
-			return $.ajax({
+		getPartyUsers: function(login) {
+			var ajaxOptions = {
 				url: '/REST/party-users',
 				contentType: 'application/json',
 				type: 'POST',
-				dataType: "json",
-				data: credentials
-			});
+				dataType: "json"
+			};
+			this.addAuthorizationToAjaxOptions(ajaxOptions, login);
+			return $.ajax(ajaxOptions);
 		}
 	};
 })();

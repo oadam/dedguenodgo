@@ -1,6 +1,7 @@
 package nonoel
 
 import (
+	"appengine"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -13,21 +14,24 @@ func init() {
 	RegisterPartyHandlers(main)
 }
 
-func AddAuth(subpath string, handler http.Handler) http.Handler {
+func AddAuth(handler AuthenticatedHandlerFunc) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		c := appengine.NewContext(r)
 		var partyId = r.Header.Get("dedguenodgo-partyId")
 		var partyPassword = r.Header.Get("dedguenodgo-partyPassword")
-		if !checkAuth(partyId, partyPassword) {
+		if partyId == "" || partyPassword == "" {
+			http.Error(w, "received empty id or password", http.StatusUnauthorized)
+			return
+		}
+		if !CheckPartyPassword(c, partyId, partyPassword) {
 			http.Error(w, "wrong username/password", http.StatusUnauthorized)
 		} else {
-			handler.ServeHTTP(w, r)
+			handler(partyId, w, r)
 		}
 	})
 }
 
-func checkAuth(partyId, partyPassword string) bool {
-	return partyId == "partyId" && partyPassword == "partyPassword"
-}
+type AuthenticatedHandlerFunc func(partyName string, w http.ResponseWriter, r *http.Request)
 
 func noop(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, r.URL)

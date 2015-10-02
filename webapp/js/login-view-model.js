@@ -70,8 +70,8 @@
 			this.partyLoading(true);
 			this.partyError(false);
 			this._server.getPartyUsers({
-				id: this.partyId(),
-				password: this.partyPassword()
+				partyId: this.partyId(),
+				partyPassword: this.partyPassword()
 			}).always(function() {
 				self.partyLoading(false);
 			}).fail(function() {

@@ -49,8 +49,8 @@
 		setLogin: function(login) {
 			this.login = login;
 		},
-		_getPartyUsers: function(credentials) {
-			if (credentials.id == 'demo' && credentials.password == 'demo') {
+		_getPartyUsers: function(login) {
+			if (credentials.partyId == 'demo' && credentials.partyPassword == 'demo') {
 				var users = this._loadUsers();
 				return Object.keys(users).map(function(k) {
 					return users[k];
