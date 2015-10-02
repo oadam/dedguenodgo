@@ -37,9 +37,6 @@
 		setLogin: function(login) {
 			this.login = login;
 		},
-		wakeUp: function() {
-			return $.get('unauthenticated-resources/wake-up');
-		},
 		addPresent: function(present) {
 			var converted = Server._formatForServer(present);
 			delete converted.id;
