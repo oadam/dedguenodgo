@@ -1,7 +1,6 @@
 package nonoel
 
 import (
-	"appengine"
 	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -11,7 +10,7 @@ func init() {
 	r := mux.NewRouter()
 	http.Handle("/", r)
 	main := r.PathPrefix("/REST/").Subrouter()
-	RegisterUserGroupHandlers(main)
+	RegisterPartyHandlers(main)
 }
 
 func AddAuth(subpath string, handler http.Handler) http.Handler {

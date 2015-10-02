@@ -41,7 +41,7 @@
 			var converted = Server._formatForServer(present);
 			delete converted.id;
 			var ajaxOptions = {
-				url: 'authenticated-resources/present',
+				url: '/REST/present',
 				contentType: 'application/json',
 				type: 'POST',
 				data: JSON.stringify(converted),
@@ -53,7 +53,7 @@
 		editPresent: function(oldPresent, newPresent) {
 			var converted = Server._formatForServer(newPresent);
 			var ajaxOptions = {
-				url: 'authenticated-resources/present/' + oldPresent.id,
+				url: '/REST/present/' + oldPresent.id,
 				contentType: 'application/json',
 				type: 'PUT',
 				data: JSON.stringify(converted),
@@ -64,7 +64,7 @@
 		},
 		addUser: function(user) {
 			var ajaxOptions = {
-				url: 'authenticated-resources/user',
+				url: '/REST/user',
 				contentType: 'application/json',
 				type: 'POST',
 				data: JSON.stringify(user),
@@ -75,7 +75,7 @@
 		},
 		deleteUser: function(userId) {
 			var ajaxOptions = {
-				url: 'authenticated-resources/user/' + userId,
+				url: '/REST/user/' + userId,
 				contentType: 'application/json',
 				type: 'DELETE',
 				dataType: "json"
@@ -85,7 +85,7 @@
 		},
 		getUsersAndPresents: function() {
 			var ajaxOptions = {
-				url: 'authenticated-resources/users-and-presents',
+				url: '/REST/users-and-presents',
 				contentType: 'application/json',
 				type: 'GET',
 				dataType: "json"
@@ -100,7 +100,7 @@
 		},
 		getPartyUsers: function(credentials) {
 			return $.ajax({
-				url: 'unauthenticated-resources/party-users',
+				url: '/REST/party-users',
 				contentType: 'application/json',
 				type: 'POST',
 				dataType: "json",

@@ -13,9 +13,6 @@ type adminPassword struct {
 }
 
 func CheckOrSetAdminPassword(c appengine.Context, password string) error {
-	//we need a parentKey to have strong consistency
-	//parentKey := datastore.NewKey(c, "adminPasswordParent", "singleton", 0, nil)
-	//key := datastore.NewKey(c, "adminPassword", "singleton", 0, parentKey)
 	key := datastore.NewKey(c, "adminPassword", "singleton", 0, nil)
 	current := new(adminPassword)
 	var err = datastore.Get(c, key, current)
