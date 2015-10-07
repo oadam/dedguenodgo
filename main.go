@@ -12,6 +12,7 @@ func init() {
 	http.Handle("/", r)
 	main := r.PathPrefix("/REST/").Subrouter()
 	RegisterPartyHandlers(main)
+	RegisterUserHandlers(main)
 }
 
 func AddAuth(handler AuthenticatedHandlerFunc) http.Handler {

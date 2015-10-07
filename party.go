@@ -39,12 +39,8 @@ func createParty(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getPartyUsers(partyId string, w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "[]")
-}
-
 func CheckPartyPassword(c appengine.Context, id, password string) bool {
-	key := getPartyKey(c, id)
+	key := GetPartyKey(c, id)
 	current := new(Party)
 	var err = datastore.Get(c, key, current)
 	passOk := errBoolOrPanic(err, nil, datastore.ErrNoSuchEntity)
@@ -70,12 +66,12 @@ type Party struct {
 	Password []byte
 }
 
-func getPartyKey(c appengine.Context, id string) *datastore.Key {
+func GetPartyKey(c appengine.Context, id string) *datastore.Key {
 	return datastore.NewKey(c, "party", id, 0, nil)
 }
 
 func storeParty(c appengine.Context, id, password string) error {
-	key := getPartyKey(c, id)
+	key := GetPartyKey(c, id)
 	hashed, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
