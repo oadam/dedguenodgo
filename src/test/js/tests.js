@@ -193,11 +193,11 @@ describe("The view model", function() {
 		viewModel.deletePresent(viewModel.presents()[2]);
 		viewModel.loggedInUser("idElisa");
 		viewModel.selectedList('idOlivier');
-		expect(viewModel.displayedPresents().length).toEqual(2);
+		expect(viewModel.displayedPresents().length).toEqual(1);
 	});
 
 
-	it("let a user mark a present offered in his list event when already offered", function() {
+	it("let a user mark a present offered in his list even when already offered", function() {
 		viewModel.togglePresentOffered(viewModel.presents()[2]);
 		expect(viewModel.presents()[2].offeredBy).toEqual('idOlivier');
 	});

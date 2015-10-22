@@ -63,14 +63,8 @@ h1 {
 	text-decoration: line-through;
 	color: grey;
 }
-.present .offered-by, .present .deleted-by {
+.present .offered-by {
 	font-size: 0.7em;
-}
-.present.deleted {
-	background: #FFF1A9;
-}
-.present.deleted-by {
-	font-weight: bold;
 }
 .present > .buttons > a, .present > .buttons > .reorder {
 	margin-left: 0.5em;

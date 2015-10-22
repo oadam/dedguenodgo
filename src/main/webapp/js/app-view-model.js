@@ -134,7 +134,7 @@ AppViewModel.prototype = {
 			if (p.to != selectedList) {
 				return false;
 			}
-			if (p.deletedBy && !self.displayPresentAsOffered(p)) {
+			if (p.deletedBy) {
 				return false;
 			}
 			if (p.to == loggedInUser && p.createdBy != loggedInUser) {
@@ -350,12 +350,6 @@ AppViewModel.prototype = {
 		var clone = $.extend({}, present);
 		clone.deletedBy = this.loggedInUser();
 		this._savePresent(present, clone, hideUndo);
-	},
-	undeletePresent: function(present) {
-		this.discardConfirm();
-		var clone = $.extend({}, present);
-		clone.deletedBy = null;
-		this._savePresent(present, clone);
 	},
 	discardConfirm: function() {
 		this.successMessage(null);
