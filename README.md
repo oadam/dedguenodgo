@@ -13,6 +13,6 @@ Environment                                                                     
 Install [Maven](http://maven.apache.org/install.html)
 `mvn verify`
 
-- If doing java work, run the dev server  with `mvn appengine:devserver`
+- If doing java work, run the dev server  with `mvn com.google.cloud.tools:appengine-maven-plugin:run`
 - If doing javascript work, `cd src/main/webapp && python -m SimpleHTTPServer` then go to [http://localhost:8000/index.html?demo=1]()
-- To deploy to appengine : `mvn appengine:update`
+- To deploy to appengine : `GOOGLE_PROJECT_ID=your-project mvn com.google.cloud.tools:appengine-maven-plugin:deploy`
